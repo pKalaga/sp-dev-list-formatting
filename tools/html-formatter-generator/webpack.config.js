@@ -30,5 +30,8 @@ const configOverrides = {
 };
 
 module.exports = [
-  createConfig(configOverrides, { bundleName: "htmtofmt", isProduction: true }),
+  createConfig(configOverrides, {
+    bundleName: "htmtofmt",
+    isProduction: false,
+  }),
 ];

@@ -47,10 +47,9 @@ export function DragResizeEdge(props: IDragResizeEdgeProps) {
   return (
     <div
       style={{
-        border: "1px black solid",
-        height: "100%",
-        width: "1px",
-        background: "#edebe9",
+        border: "0.5px solid black",
+        width: "2px",
+        margin: "10px 0",
         cursor: "ew-resize",
       }}
       onMouseDown={_onMouseDown}
@@ -59,7 +58,7 @@ export function DragResizeEdge(props: IDragResizeEdgeProps) {
         style={{
           zIndex: 286,
           position: "relative",
-          width: "8px",
+          width: "2px",
           cursor: "ew-resize",
           height: "100%",
         }}

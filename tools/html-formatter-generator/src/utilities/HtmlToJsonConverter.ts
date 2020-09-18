@@ -1,5 +1,8 @@
 import { parse as parseCSSDocument, Rule, Declaration } from "css";
 
+const JSON_SCHEMA_URL =
+  "https://developer.microsoft.com/json-schemas/sp/v2/column-formatting.schema.json";
+
 const errorStrings: { [x: string]: string } = {
   elmTypeMissing: "Must specify a tagName, tag cannot be empty.",
   elmTypeInvalid: "Invalid tag: {0}. Must be one of {1}.",
@@ -92,7 +95,7 @@ export function createFormatter(
   level: number,
   cssText?: string
 ) {
-  if (!elm.tagName) {
+  if (!elm || !elm.tagName) {
     return throwErr(errorStrings.elmTypeMissing);
   }
 
@@ -105,14 +108,16 @@ export function createFormatter(
       )
     );
   }
+  let jsonVal: any = {};
 
-  if (level === 0 && cssText) {
-    appendInlineCss(elm, cssText);
+  if (level === 0) {
+    jsonVal.$schema = JSON_SCHEMA_URL;
+    if (cssText) {
+      appendInlineCss(elm, cssText);
+    }
   }
 
-  let jsonVal: any = {
-    elmType: elm.tagName.toLowerCase(),
-  };
+  jsonVal.elmType = elm.tagName.toLowerCase();
 
   for (let index = 0; index < elm.attributes.length; index++) {
     const element = elm.attributes[index];
@@ -125,7 +130,7 @@ export function createFormatter(
       element.textContent.split(";").forEach((element) => {
         let keyValuePair = element.split(":");
         if (keyValuePair.length === 2) {
-          styleObj[keyValuePair[0]] = keyValuePair[1];
+          styleObj[keyValuePair[0].trim()] = keyValuePair[1].trim();
         }
       });
       jsonVal.style = styleObj;

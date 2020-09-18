@@ -32,18 +32,17 @@ const codeEditor = ({
   };
 
   return (
-    <div>
+    <>
       <span className={"paneTitle"}>{title}</span>
       <MonacoEditor
         {...{
           ...monacoEditorProps,
           language: language,
           width: `${width - 16}px`,
-          height: `95%`,
           editorDidMount: currentEditorMount,
         }}
       />
-    </div>
+    </>
   );
 };
 
@@ -56,11 +55,14 @@ export const CodeEditor: React.FC<IEditorsHostProps> = (
   const {
     editors: [htmlEditor, cssEditor],
   } = props;
+
   const containerProps: IResizableSplitContainerProps = {
     className: "paneContainer",
-    containerWidth: 1080,
+    containerWidth: window.innerWidth - 400,
+    containerHeight: window.innerHeight - 60,
     ...(htmlEditor.selected ? { leftContent: codeEditor(htmlEditor) } : {}),
     ...(cssEditor.selected ? { rightContent: codeEditor(cssEditor) } : {}),
   };
+
   return <ResizableSplitContainer {...containerProps} />;
 };

@@ -94,7 +94,19 @@ function createConfig(config, { bundleName, isProduction }) {
       module: {
         rules: [
           {
-            test: /\.(png|svg|jpg|jpeg|gif|ico)$/,
+            test: /\.(png|jpg|svg)$/i,
+            exclude: /node_modules/,
+            use: [
+              {
+                loader: "url-loader",
+                options: {
+                  limit: 8192,
+                },
+              },
+            ],
+          },
+          {
+            test: /\.(jpeg|gif|ico)$/,
             exclude: /node_modules/,
             use: ["file-loader?name=[name].[ext]"],
           },

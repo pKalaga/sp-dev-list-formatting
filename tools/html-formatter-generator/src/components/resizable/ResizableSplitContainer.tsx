@@ -7,9 +7,13 @@ import {
 
 export interface IResizableSplitContainerProps {
   /**
-   *
+   * initial container width
    */
-  containerWidth: number;
+  containerWidth?: number;
+  /**
+   * initial container height
+   */
+  containerHeight?: number;
   /**
    * minimum width of the container
    */
@@ -44,7 +48,8 @@ export function ResizableSplitContainer(props: IResizableSplitContainerProps) {
   const {
     leftContent,
     rightContent,
-    containerWidth = 540,
+    containerWidth = 600,
+    containerHeight = 400,
     minWidth = 0,
     onDrag,
     onDragEnd,
@@ -99,20 +104,29 @@ export function ResizableSplitContainer(props: IResizableSplitContainerProps) {
     : { width: `${rightWidth}px` };
 
   // render
-
+  const leftRenderer = leftContent ? leftContent : rightContent;
+  const leftChild = leftRenderer && (
+    <div className={className} style={leftContainerStyle}>
+      {leftRenderer(leftWidth)}
+    </div>
+  );
+  const rightRenderer = leftContent ? rightContent : null;
+  const rightChild = rightRenderer && (
+    <div className={className} style={rightContainerStyle}>
+      {rightRenderer(rightWidth)}
+    </div>
+  );
   return (
-    <div style={{ width: containerWidth, display: "flex" }}>
-      {leftContent && (
-        <div className={className} style={leftContainerStyle}>
-          {leftContent(leftWidth)}
-        </div>
-      )}
+    <div
+      style={{
+        width: containerWidth,
+        height: containerHeight,
+        display: "flex",
+      }}
+    >
+      {leftChild}
       {<DragResizeEdge {...splitterEdgeProps} />}
-      {rightContent && (
-        <div className={className} style={rightContainerStyle}>
-          {rightContent(rightWidth)}
-        </div>
-      )}
+      {rightChild}
     </div>
   );
 }

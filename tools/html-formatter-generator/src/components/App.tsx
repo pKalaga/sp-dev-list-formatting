@@ -1,6 +1,7 @@
 import * as React from "react";
 import { CodeEditor } from "./editor/CodeEditor";
 import { Header } from "./Header";
+import { CollapsibleSection } from "./collapsible/CollapsibleSection";
 import "./AppStyles.css";
 
 import {
@@ -60,13 +61,13 @@ export const App: React.FC<any> = (props: any) => {
       {
         selected: paneState.html,
         language: "html",
-        title: "HTML Pane",
+        title: "HTML",
         setEditorOnMount: (editor: any) => (htmlEditorRef.current = editor),
       },
       {
         selected: paneState.css,
         language: "css",
-        title: "CSS Pane",
+        title: "CSS",
         setEditorOnMount: (editor: any) => (cssEditorRef.current = editor),
       },
     ],
@@ -81,25 +82,20 @@ export const App: React.FC<any> = (props: any) => {
       />
       <div id="editorsRootContainer">
         <CodeEditor {...codeEditorsPaneProps} />
-        <div
-          {...{
-            className: "paneContainer",
-            style: {
-              position: "absolute",
-              right: "0",
-              width: "320px",
-              height: "90%",
-            },
-          }}
-        >
-          <pre>
-            <code contentEditable={false} ref={jsonRef}>
-              {json}
-            </code>
-          </pre>
-          <button className={"copyBtn"} onClick={copyToClipboard}>
-            copy
-          </button>
+        <div className="paneContainer" style={{ width: "320px" }}>
+          <span className="paneTitle">{"Output"}</span>
+          <CollapsibleSection title="JSON">
+            <div style={{ position: "relative" }}>
+              <pre>
+                <code contentEditable={false} ref={jsonRef}>
+                  {json}
+                </code>
+              </pre>
+              <button className={"copyBtn"} onClick={copyToClipboard}>
+                copy
+              </button>
+            </div>
+          </CollapsibleSection>
         </div>
       </div>
     </>
