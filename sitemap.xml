@@ -75,5 +75,9 @@
      <loc>https://sharepoint.github.io/sp-dev-list-formatting/contributing/docs/</loc>
      <lastmod>2020-09-19</lastmod>
      <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://sharepoint.github.io/sp-dev-list-formatting/tools/formatter-tools/</loc>
+     <lastmod>2020-09-19</lastmod>
+     <changefreq>daily</changefreq>
     </url>
 </urlset>
